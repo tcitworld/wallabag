@@ -248,8 +248,7 @@ class EntryController extends Controller
 
         try {
             $entry = $repository->getRandomEntry($this->getUser()->getId(), 'unread');
-        } catch (NoResultException $e)
-        {
+        } catch (NoResultException $e) {
             $bag = $this->get('session')->getFlashBag();
             $bag->clear();
             $bag->add('notice', 'flashes.entry.notice.no_random_entry');
@@ -275,8 +274,7 @@ class EntryController extends Controller
 
         try {
             $entry = $repository->getRandomEntry($this->getUser()->getId(), 'starred');
-        } catch (NoResultException $e)
-        {
+        } catch (NoResultException $e) {
             $bag = $this->get('session')->getFlashBag();
             $bag->clear();
             $bag->add('notice', 'flashes.entry.notice.no_random_entry');
@@ -302,8 +300,7 @@ class EntryController extends Controller
 
         try {
             $entry = $repository->getRandomEntry($this->getUser()->getId(), 'starred');
-        } catch (NoResultException $e)
-        {
+        } catch (NoResultException $e) {
             $bag = $this->get('session')->getFlashBag();
             $bag->clear();
             $bag->add('notice', 'flashes.entry.notice.no_random_entry');
@@ -313,6 +310,7 @@ class EntryController extends Controller
 
         return $this->redirect($this->generateUrl('view', ['id' => $entry->getId()]));
     }
+
     /**
      * Shows random all entry.
      *
@@ -328,8 +326,7 @@ class EntryController extends Controller
 
         try {
             $entry = $repository->getRandomEntry($this->getUser()->getId());
-        } catch (NoResultException $e)
-        {
+        } catch (NoResultException $e) {
             $bag = $this->get('session')->getFlashBag();
             $bag->clear();
             $bag->add('notice', 'flashes.entry.notice.no_random_entry');

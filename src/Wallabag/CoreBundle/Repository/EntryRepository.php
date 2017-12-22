@@ -414,29 +414,15 @@ class EntryRepository extends EntityRepository
     }
 
     /**
-     * Return a query builder to used by other getBuilderFor* method.
-     *
-     * @param int    $userId
-     * @param string $sortBy
-     * @param string $direction
-     *
-     * @return QueryBuilder
-     */
-    private function getBuilderByUser($userId, $sortBy = 'createdAt', $direction = 'desc')
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.user = :userId')->setParameter('userId', $userId)
-            ->orderBy(sprintf('e.%s', $sortBy), $direction);
-    }
-
-    /**
-     * Returns a random entry, filtering by status
+     * Returns a random entry, filtering by status.
      *
      * @param $userId
      * @param string $status can be unread, archive or starred
-     * @return Entry
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return Entry
      */
     public function getRandomEntry($userId, $status = '')
     {
@@ -461,9 +447,25 @@ class EntryRepository extends EntityRepository
         }
 
         return $qb->andWhere('e.id >= :rand')
-            ->setParameter('rand',rand(0,$max))
+            ->setParameter('rand', rand(0, $max))
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
+    }
+
+    /**
+     * Return a query builder to used by other getBuilderFor* method.
+     *
+     * @param int    $userId
+     * @param string $sortBy
+     * @param string $direction
+     *
+     * @return QueryBuilder
+     */
+    private function getBuilderByUser($userId, $sortBy = 'createdAt', $direction = 'desc')
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user = :userId')->setParameter('userId', $userId)
+            ->orderBy(sprintf('e.%s', $sortBy), $direction);
     }
 }
