@@ -428,4 +428,42 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.user = :userId')->setParameter('userId', $userId)
             ->orderBy(sprintf('e.%s', $sortBy), $direction);
     }
+
+    /**
+     * Returns a random entry, filtering by status
+     *
+     * @param $userId
+     * @param string $status can be unread, archive or starred
+     * @return Entry
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getRandomEntry($userId, $status = '')
+    {
+        $max = $this->getEntityManager()
+            ->createQuery('SELECT MAX(e.id) FROM Wallabag\CoreBundle\Entity\Entry e WHERE e.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getSingleScalarResult();
+
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.user = :user_id')->setParameter('user_id', $userId);
+
+        if ('unread' === $status) {
+            $qb->andWhere('e.isArchived = false');
+        }
+
+        if ('archive' === $status) {
+            $qb->andWhere('e.isArchived = true');
+        }
+
+        if ('starred' === $status) {
+            $qb->andWhere('e.isStarred = true');
+        }
+
+        return $qb->andWhere('e.id >= :rand')
+            ->setParameter('rand',rand(0,$max))
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }
