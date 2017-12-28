@@ -42,7 +42,7 @@ class Version20170824113337 extends AbstractMigration implements ContainerAwareI
         $this->skipIf(!$entryTable->hasColumn('starred_at'), 'Unable to add starred_at colum');
 
         $this->connection->executeQuery(
-            'UPDATE ' . $this->getTable('entry') . ' SET starred_at = updated_at WHERE is_starred = :is_starred',
+            'UPDATE `' . $this->getTable('entry') . '` SET starred_at = updated_at WHERE is_starred = :is_starred',
             [
                 'is_starred' => true,
             ]

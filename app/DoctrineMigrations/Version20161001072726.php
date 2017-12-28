@@ -60,13 +60,13 @@ class Version20161001072726 extends AbstractMigration implements ContainerAwareI
                 $query->execute();
 
                 foreach ($query->fetchAll() as $fk) {
-                    $this->addSql('ALTER TABLE ' . $this->getTable('entry_tag') . ' DROP CONSTRAINT ' . $fk['conname']);
+                    $this->addSql('ALTER TABLE `' . $this->getTable('entry_tag') . '` DROP CONSTRAINT ' . $fk['conname']);
                 }
                 break;
         }
 
-        $this->addSql('ALTER TABLE ' . $this->getTable('entry_tag') . ' ADD CONSTRAINT FK_entry_tag_entry FOREIGN KEY (entry_id) REFERENCES ' . $this->getTable('entry') . ' (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE ' . $this->getTable('entry_tag') . ' ADD CONSTRAINT FK_entry_tag_tag FOREIGN KEY (tag_id) REFERENCES ' . $this->getTable('tag') . ' (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE `' . $this->getTable('entry_tag') . '` ADD CONSTRAINT FK_entry_tag_entry FOREIGN KEY (entry_id) REFERENCES ' . $this->getTable('entry') . ' (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE `' . $this->getTable('entry_tag') . '` ADD CONSTRAINT FK_entry_tag_tag FOREIGN KEY (tag_id) REFERENCES ' . $this->getTable('tag') . ' (id) ON DELETE CASCADE');
 
         // remove entry FK from annotation
 
@@ -83,7 +83,7 @@ class Version20161001072726 extends AbstractMigration implements ContainerAwareI
                 $query->execute();
 
                 foreach ($query->fetchAll() as $fk) {
-                    $this->addSql('ALTER TABLE ' . $this->getTable('annotation') . ' DROP FOREIGN KEY ' . $fk['CONSTRAINT_NAME']);
+                    $this->addSql('ALTER TABLE `' . $this->getTable('annotation') . '` DROP FOREIGN KEY ' . $fk['CONSTRAINT_NAME']);
                 }
                 break;
             case 'postgresql':
@@ -102,12 +102,12 @@ class Version20161001072726 extends AbstractMigration implements ContainerAwareI
                 $query->execute();
 
                 foreach ($query->fetchAll() as $fk) {
-                    $this->addSql('ALTER TABLE ' . $this->getTable('annotation') . ' DROP CONSTRAINT ' . $fk['conname']);
+                    $this->addSql('ALTER TABLE `' . $this->getTable('annotation') . '` DROP CONSTRAINT ' . $fk['conname']);
                 }
                 break;
         }
 
-        $this->addSql('ALTER TABLE ' . $this->getTable('annotation') . ' ADD CONSTRAINT FK_annotation_entry FOREIGN KEY (entry_id) REFERENCES ' . $this->getTable('entry') . ' (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE `' . $this->getTable('annotation') . '` ADD CONSTRAINT FK_annotation_entry FOREIGN KEY (entry_id) REFERENCES ' . $this->getTable('entry') . ' (id) ON DELETE CASCADE');
     }
 
     /**

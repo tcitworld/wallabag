@@ -64,10 +64,10 @@ EOD
                 $this->addSql('DROP TABLE __temp__wallabag_annotation');
                 break;
             case 'mysql':
-                $this->addSql('ALTER TABLE ' . $tableName . ' MODIFY quote TEXT NOT NULL');
+                $this->addSql('ALTER TABLE `' . $tableName . '` MODIFY quote TEXT NOT NULL');
                 break;
             case 'postgresql':
-                $this->addSql('ALTER TABLE ' . $tableName . ' ALTER COLUMN quote TYPE TEXT');
+                $this->addSql('ALTER TABLE `' . $tableName . '` ALTER COLUMN quote TYPE TEXT');
                 break;
         }
     }
@@ -81,10 +81,10 @@ EOD
                 throw new SkipMigrationException('Too complex ...');
                 break;
             case 'mysql':
-                $this->addSql('ALTER TABLE ' . $tableName . ' MODIFY quote VARCHAR(255) NOT NULL');
+                $this->addSql('ALTER TABLE `' . $tableName . '` MODIFY quote VARCHAR(255) NOT NULL');
                 break;
             case 'postgresql':
-                $this->addSql('ALTER TABLE ' . $tableName . ' ALTER COLUMN quote TYPE VARCHAR(255)');
+                $this->addSql('ALTER TABLE `' . $tableName . '` ALTER COLUMN quote TYPE VARCHAR(255)');
                 break;
         }
     }

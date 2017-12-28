@@ -32,7 +32,7 @@ class Version20170719231144 extends AbstractMigration implements ContainerAwareI
         // Find tags which need to be merged
         $dupTags = $this->connection->query('
             SELECT LOWER(label) AS lower_label
-            FROM   ' . $this->getTable('tag') . '
+            FROM   `' . $this->getTable('tag') . '`
             GROUP BY LOWER(label)
             HAVING COUNT(*) > 1'
         );
@@ -44,7 +44,7 @@ class Version20170719231144 extends AbstractMigration implements ContainerAwareI
             // Retrieve all duplicate tags for a given tag
             $tags = $this->connection->executeQuery('
                 SELECT id
-                FROM   ' . $this->getTable('tag') . '
+                FROM   `' . $this->getTable('tag') . '`
                 WHERE  LOWER(label) = :label
                 ORDER BY id ASC',
                 [
@@ -70,25 +70,25 @@ class Version20170719231144 extends AbstractMigration implements ContainerAwareI
             if (count($ids) > 0) {
                 // Merge tags
                 $this->addSql('
-                    UPDATE ' . $this->getTable('entry_tag') . '
+                    UPDATE `' . $this->getTable('entry_tag') . '`
                     SET    tag_id = ' . $newId . '
                     WHERE  tag_id IN (' . implode(',', $ids) . ')
                         AND entry_id NOT IN (
                            SELECT entry_id
-                           FROM (SELECT * FROM ' . $this->getTable('entry_tag') . ') AS _entry_tag
+                           FROM (SELECT * FROM `' . $this->getTable('entry_tag') . '`) AS _entry_tag
                            WHERE tag_id = ' . $newId . '
                         )'
                 );
 
                 // Delete links to unused tags
                 $this->addSql('
-                    DELETE FROM ' . $this->getTable('entry_tag') . '
+                    DELETE FROM `' . $this->getTable('entry_tag') . '`
                     WHERE tag_id IN (' . implode(',', $ids) . ')'
                 );
 
                 // Delete unused tags
                 $this->addSql('
-                    DELETE FROM ' . $this->getTable('tag') . '
+                    DELETE FROM `' . $this->getTable('tag') . '`
                     WHERE id IN (' . implode(',', $ids) . ')'
                 );
             }
@@ -96,7 +96,7 @@ class Version20170719231144 extends AbstractMigration implements ContainerAwareI
 
         // Iterate over all tags to lowercase them
         $this->addSql('
-            UPDATE ' . $this->getTable('tag') . '
+            UPDATE `' . $this->getTable('tag') . '`
             SET label = LOWER(label)'
         );
     }

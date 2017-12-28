@@ -54,7 +54,7 @@ class Version20160410190541 extends AbstractMigration implements ContainerAwareI
         $entryTable = $schema->getTable($this->getTable('entry'));
         $entryTable->dropColumn('uid');
 
-        $this->addSql('DELETE FROM ' . $this->getTable('craue_config_setting') . " WHERE name = 'share_public'");
+        $this->addSql('DELETE FROM `' . $this->getTable('craue_config_setting') . "` WHERE name = 'share_public'");
     }
 
     private function getTable($tableName)

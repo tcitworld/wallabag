@@ -40,10 +40,10 @@ class Version20161214094402 extends AbstractMigration implements ContainerAwareI
                 $this->addSql('DROP TABLE __temp__wallabag_entry');
                 break;
             case 'mysql':
-                $this->addSql('ALTER TABLE ' . $this->getTable('entry') . ' CHANGE uuid uid VARCHAR(23)');
+                $this->addSql('ALTER TABLE `' . $this->getTable('entry') . '` CHANGE uuid uid VARCHAR(23)');
                 break;
             case 'postgresql':
-                $this->addSql('ALTER TABLE ' . $this->getTable('entry') . ' RENAME uuid TO uid');
+                $this->addSql('ALTER TABLE `' . $this->getTable('entry') . '` RENAME uuid TO uid');
         }
     }
 
@@ -61,10 +61,10 @@ class Version20161214094402 extends AbstractMigration implements ContainerAwareI
                 throw new SkipMigrationException('Too complex ...');
                 break;
             case 'mysql':
-                $this->addSql('ALTER TABLE ' . $this->getTable('entry') . ' CHANGE uid uuid VARCHAR(23)');
+                $this->addSql('ALTER TABLE `' . $this->getTable('entry') . '` CHANGE uid uuid VARCHAR(23)');
                 break;
             case 'postgresql':
-                $this->addSql('ALTER TABLE ' . $this->getTable('entry') . ' RENAME uid TO uuid');
+                $this->addSql('ALTER TABLE `' . $this->getTable('entry') . '` RENAME uid TO uuid');
         }
     }
 
