@@ -193,7 +193,14 @@ class ContentProxy
      */
     private function stockEntry(Entry $entry, array $content)
     {
-        $entry->setUrl($content['url']);
+        // When a redirection occurs while fetching an entry
+        // we move the original url in origin_url property
+        // and set the entry url with the final value
+        if (!empty($content['url']) && $entry->getUrl() != $content['url'])
+        {
+            $entry->setOriginUrl($entry->getUrl());
+            $entry->setUrl($content['url']);
+        }
 
         $this->setEntryDomainName($entry);
 
